@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.android.musictheoryquizzapp.MainActivity">
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/button"
+        android:onClick="calculateScore"
+        android:text="Submit"/>
+
+    <TextView
+        android:id="@+id/player_name"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:text=""
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/help1"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/icon_help"/>
+
+        <ImageView
+            android:id="@+id/help2"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/icon_help"/>
+
+        <ImageView
+            android:id="@+id/help3"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/icon_help"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/submit_button"
+        android:layout_below="@id/player_name"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/question_bg"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/question"
+                    android:text="1. How many notes does a major diatonic scale have?"/>
+
+                <RadioGroup
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_1A"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="5"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_1B"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="7"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_1C"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="8"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_1D"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="10"/>
+
+                </RadioGroup>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorAccent"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="4dp">
+
+                    <ImageView
+                        android:id="@+id/q1_hint"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="16dp"
+                        android:onClick="giveHint"
+                        android:src="@drawable/icon_hint"/>
+
+                    <ImageView
+                        android:id="@+id/q1_fifty"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        android:onClick="give50"
+                        android:src="@drawable/icon_fifty"/>
+
+                    <TextView
+                        android:id="@+id/hint1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/q1_hint"
+                        android:layout_toLeftOf="@id/q1_fifty"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/question_bg"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/question"
+                    android:text="2. How many sharp notes does the key of E Major have?"/>
+
+                <RadioGroup
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_2A"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_2B"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_2C"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="4"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_2D"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="6"/>
+
+                </RadioGroup>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorAccent"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="4dp">
+
+                    <ImageView
+                        android:id="@+id/q2_hint"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="16dp"
+                        android:onClick="giveHint"
+                        android:src="@drawable/icon_hint"/>
+
+                    <ImageView
+                        android:id="@+id/q2_fifty"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        android:onClick="give50"
+                        android:src="@drawable/icon_fifty"/>
+
+                    <TextView
+                        android:id="@+id/hint2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/q2_hint"
+                        android:layout_toLeftOf="@id/q2_fifty"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/question_bg"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/question"
+                    android:text="3. What kind of chord is this?"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/d_minor_png"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/radio_3A"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic3A"
+                            android:text="Major"/>
+
+                        <RadioButton
+                            android:id="@+id/radio_3B"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic3B"
+                            android:text="minor"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/radio_3C"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic3C"
+                            android:text="Augmented"/>
+
+                        <RadioButton
+                            android:id="@+id/radio_3D"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic3D"
+                            android:text="Diminished"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorAccent"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="4dp">
+
+                    <ImageView
+                        android:id="@+id/q3_hint"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="16dp"
+                        android:onClick="giveHint"
+                        android:src="@drawable/icon_hint"/>
+
+                    <ImageView
+                        android:id="@+id/q3_fifty"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        android:onClick="give50"
+                        android:src="@drawable/icon_fifty"/>
+
+                    <TextView
+                        android:id="@+id/hint3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/q3_hint"
+                        android:layout_toLeftOf="@id/q3_fifty"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/question_bg"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/question"
+                    android:text="4. What interval is this?"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/perfect_8_png"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/radio_4A"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic4A"
+                            android:text="Major"/>
+
+                        <RadioButton
+                            android:id="@+id/radio_4B"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic4B"
+                            android:text="minor"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/radio_4C"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic4C"
+                            android:text="Perfect"/>
+
+                        <RadioButton
+                            android:id="@+id/radio_4D"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic4D"
+                            android:text="Diminished"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorAccent"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="4dp">
+
+                    <ImageView
+                        android:id="@+id/q4_hint"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="16dp"
+                        android:onClick="giveHint"
+                        android:src="@drawable/icon_hint"/>
+
+                    <ImageView
+                        android:id="@+id/q4_fifty"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        android:onClick="give50"
+                        android:src="@drawable/icon_fifty"/>
+
+                    <TextView
+                        android:id="@+id/hint4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/q4_hint"
+                        android:layout_toLeftOf="@id/q4_fifty"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/question_bg"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/question"
+                    android:text="5. Which two keys does this key signature refer to?"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/key_g_png"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/checkbox_5A"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="C Major"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_5B"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="A minor"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_5C"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="G Major"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_5D"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="E minor"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorAccent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/q5_hint"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="36dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:onClick="giveHint"
+                    android:src="@drawable/icon_hint"/>
+
+                <TextView
+                    android:id="@+id/hint5"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/question_bg"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    style="@style/question"
+                    android:text="6. What kind of chord is this? (click the icon to listen)"/>
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
+                    android:onClick="audioPlayback"
+                    android:src="@drawable/audio_icon"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/radio_6A"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic6A"
+                            android:text="Major"/>
+
+                        <RadioButton
+                            android:id="@+id/radio_6B"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic6B"
+                            android:text="minor"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/radio_6C"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic6C"
+                            android:text="Augmented"/>
+
+                        <RadioButton
+                            android:id="@+id/radio_6D"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="buttonLogic6D"
+                            android:text="Diminished"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorAccent"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="4dp">
+
+                    <ImageView
+                        android:id="@+id/q6_hint"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="16dp"
+                        android:onClick="giveHint"
+                        android:src="@drawable/icon_hint"/>
+
+                    <ImageView
+                        android:id="@+id/q6_fifty"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        android:onClick="give50"
+                        android:src="@drawable/icon_fifty"/>
+
+                    <TextView
+                        android:id="@+id/hint6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/q6_hint"
+                        android:layout_toLeftOf="@id/q6_fifty"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/question_bg"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    style="@style/question"
+                    android:text="7. Which of these notes are present in an A half-diminished chord?"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/checkbox_7A"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="G"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_7B"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="C#"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/checkbox_7C"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="E"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_7D"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="A"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorAccent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/q7_hint"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="36dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:onClick="giveHint"
+                        android:src="@drawable/icon_hint"/>
+
+                    <TextView
+                        android:id="@+id/hint7"
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/question_bg"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/question"
+                    android:text="8. What kind of scale is this?"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/a_harmonic_png"/>
+
+                <EditText
+                    android:id="@+id/text_field_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:hint="This is an * scale."
+                    android:inputType="textCapWords"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorAccent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/q8_hint"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="36dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:onClick="giveHint"
+                        android:src="@drawable/icon_hint"/>
+
+                    <TextView
+                        android:id="@+id/hint8"
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
