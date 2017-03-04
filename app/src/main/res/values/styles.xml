@@ -57,15 +57,15 @@
         <item name="android:layout_height">@dimen/icon_size</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_marginLeft">@dimen/semi_big_margin</item>
-        <item name="android:onClick">give50</item>
+        <item name="android:onClick">giveHint</item>
         <item name="android:src">@drawable/icon_hint</item>
     </style>
 
-    <style name="">
+    <!-- <style name="">
         <item name=""></item>
         <item name=""></item>
         <item name=""></item>
         <item name=""></item>
         <item name=""></item>
-    </style>
+    </style> -->
 </resources>

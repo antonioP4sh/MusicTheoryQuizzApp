@@ -20,6 +20,15 @@ public class MainActivity extends AppCompatActivity {
     int helpCount = 0;
     String[] usedHelps = new String[3];
     String[] usedHelpsIcon = new String[3];
+    boolean[] isTipOn = new boolean[8];
+    boolean[] isFiftyOn = new boolean[6];
+    int[] fiftyAbleQuestions = {
+            1,
+            2,
+            3,
+            4,
+            6
+    };
     String mLayout = "";
 
     @Override
@@ -49,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             outState.putStringArray("USED_HELPS_ARRAY_KEY", usedHelps);
             outState.putStringArray("HELPS_ICON_ARRAY_KEY", usedHelpsIcon);
             outState.putInt("HELP_COUNT", helpCount);
+            outState.putBooleanArray("USED_HINTS_ARRAY_KEY", isTipOn);
+            outState.putBooleanArray("USED_FIFTY_ARRAY_KEY", isFiftyOn);
         }
     }
 
@@ -65,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
             mLayout = savedInstanceState.getString("LAYOUT_KEY");
             usedHelps = savedInstanceState.getStringArray("USED_HELPS_ARRAY_KEY");
             usedHelpsIcon = savedInstanceState.getStringArray("HELPS_ICON_ARRAY_KEY");
+            isTipOn = savedInstanceState.getBooleanArray("USED_HINTS_ARRAY_KEY");
+            isFiftyOn = savedInstanceState.getBooleanArray("USED_FIFTY_ARRAY_KEY");
 
             if (usedHelps[0] != null) {
                 for (int i = 0; i < (helpCount); i++) {
@@ -77,6 +90,19 @@ public class MainActivity extends AppCompatActivity {
                     int helpCountResId = getResources().getIdentifier("help" + (i + 1), "id", getPackageName());
                     ImageView helpCountIcon = (ImageView) findViewById(helpCountResId);
                     helpCountIcon.setImageResource(R.drawable.icon_help_wh);
+                }
+            }
+            for (int i = 0; i < (8); i++) {
+                if (isTipOn[i] == true) {
+                    displayHint(i + 1);
+                }
+            }
+
+            isFiftyOn[4] = false;
+            for (int j = 0; j < (6); j++) {
+                if (isFiftyOn[j] == true) {
+                    // int fiftyQuestion = fiftyAbleQuestions[j];
+                    displayFifty(j + 1);
                 }
             }
             if (helpCount == 3) {
@@ -314,9 +340,13 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("MainActivity", "Score is " + score);
 
-        Toast toast = Toast.makeText(this, "You scored " + score + "/16", Toast.LENGTH_LONG);
-        toast.show();
-
+        if (playerName != "") {
+            Toast toast = Toast.makeText(this, playerName + ", you scored " + score + "/16", Toast.LENGTH_LONG);
+            toast.show();
+        } else {
+            Toast toast = Toast.makeText(this, "You scored " + score + "/16", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     public void giveHint(View v) {
@@ -385,6 +415,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void deleteHelps(int questionNo, String type) {
 
+
         //  Find out which help view was used
         String helpViewResId = "q" + (questionNo) + "_" + (type);
         int helpResId = getResources().getIdentifier(helpViewResId, "id", getPackageName());
@@ -404,6 +435,13 @@ public class MainActivity extends AppCompatActivity {
             usedHelpsIcon[helpCount - 1] = iconViewResId;
         }
 
+        if (type.equals("hint")) {
+            isTipOn[questionNo - 1] = true;
+        } else {
+            isFiftyOn[questionNo - 1] = true;
+        }
+
+
         if (helpCount == 3) {
             fullHelpWipe();
         }
@@ -418,13 +456,6 @@ public class MainActivity extends AppCompatActivity {
             hintIcon.setImageResource(R.drawable.icon_hint_del);
         }
 
-        int[] fiftyAbleQuestions = {
-                1,
-                2,
-                3,
-                4,
-                6
-        };
         for (int i = 0; i < (fiftyAbleQuestions.length); i++) {
             String helpViewResId = "q" + (fiftyAbleQuestions[i]) + "_fifty";
             int helpResId = getResources().getIdentifier(helpViewResId, "id", getPackageName());
@@ -442,43 +473,18 @@ public class MainActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.q1_fifty:
                 questionNo = 1;
-                RadioButton radioOut1a = (RadioButton) findViewById(R.id.radio_1A);
-                radioOut1a.setVisibility(View.INVISIBLE);
-                RadioButton radioOut1b = (RadioButton) findViewById(R.id.radio_1D);
-                radioOut1b.setVisibility(View.INVISIBLE);
-
                 break;
             case R.id.q2_fifty:
                 questionNo = 2;
-                RadioButton radioOut2a = (RadioButton) findViewById(R.id.radio_2A);
-                radioOut2a.setVisibility(View.INVISIBLE);
-                RadioButton radioOut2b = (RadioButton) findViewById(R.id.radio_2B);
-                radioOut2b.setVisibility(View.INVISIBLE);
-
                 break;
             case R.id.q3_fifty:
                 questionNo = 3;
-                RadioButton radioOut3a = (RadioButton) findViewById(R.id.radio_3C);
-                radioOut3a.setVisibility(View.INVISIBLE);
-                RadioButton radioOut3b = (RadioButton) findViewById(R.id.radio_3D);
-                radioOut3b.setVisibility(View.INVISIBLE);
-
                 break;
             case R.id.q4_fifty:
                 questionNo = 4;
-                RadioButton radioOut4a = (RadioButton) findViewById(R.id.radio_4B);
-                radioOut4a.setVisibility(View.INVISIBLE);
-                RadioButton radioOut4b = (RadioButton) findViewById(R.id.radio_4D);
-                radioOut4b.setVisibility(View.INVISIBLE);
-
                 break;
             case R.id.q6_fifty:
                 questionNo = 6;
-                RadioButton radioOut6a = (RadioButton) findViewById(R.id.radio_6A);
-                radioOut6a.setVisibility(View.INVISIBLE);
-                RadioButton radioOut6b = (RadioButton) findViewById(R.id.radio_6B);
-                radioOut6b.setVisibility(View.INVISIBLE);
-
                 break;
 
         }
@@ -487,11 +493,47 @@ public class MainActivity extends AppCompatActivity {
 
         if (helpCount < 4) {
             deleteHelps(questionNo, "fifty");
+            displayFifty(questionNo);
 
         } else {
             helpCount = 3;
             Toast toast = Toast.makeText(this, "No more helps available", Toast.LENGTH_SHORT);
             toast.show();
+        }
+    }
+
+    public void displayFifty(int questionNo) {
+        switch (questionNo) {
+            case 1:
+                RadioButton radioOut1a = (RadioButton) findViewById(R.id.radio_1A);
+                radioOut1a.setVisibility(View.INVISIBLE);
+                RadioButton radioOut1b = (RadioButton) findViewById(R.id.radio_1D);
+                radioOut1b.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                RadioButton radioOut2a = (RadioButton) findViewById(R.id.radio_2A);
+                radioOut2a.setVisibility(View.INVISIBLE);
+                RadioButton radioOut2b = (RadioButton) findViewById(R.id.radio_2B);
+                radioOut2b.setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                RadioButton radioOut3a = (RadioButton) findViewById(R.id.radio_3C);
+                radioOut3a.setVisibility(View.INVISIBLE);
+                RadioButton radioOut3b = (RadioButton) findViewById(R.id.radio_3D);
+                radioOut3b.setVisibility(View.INVISIBLE);
+                break;
+            case 4:
+                RadioButton radioOut4a = (RadioButton) findViewById(R.id.radio_4B);
+                radioOut4a.setVisibility(View.INVISIBLE);
+                RadioButton radioOut4b = (RadioButton) findViewById(R.id.radio_4D);
+                radioOut4b.setVisibility(View.INVISIBLE);
+                break;
+            case 6:
+                RadioButton radioOut6a = (RadioButton) findViewById(R.id.radio_6A);
+                radioOut6a.setVisibility(View.INVISIBLE);
+                RadioButton radioOut6b = (RadioButton) findViewById(R.id.radio_6B);
+                radioOut6b.setVisibility(View.INVISIBLE);
+                break;
         }
     }
 }
