@@ -65,6 +65,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/question1"
                 style="@style/question_layout">
 
                 <TextView
@@ -144,6 +145,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/question2"
                 style="@style/question_layout">
 
                 <TextView
@@ -223,6 +225,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/question3"
                 style="@style/question_layout">
 
                 <TextView
@@ -327,6 +330,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/question4"
                 style="@style/question_layout">
 
                 <TextView
@@ -431,6 +435,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/question5"
                 style="@style/question_layout">
 
                 <TextView
@@ -517,6 +522,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/question6"
                 style="@style/question_layout">
 
                 <TextView
@@ -622,6 +628,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/question7"
                 style="@style/question_layout">
 
                 <TextView
@@ -713,6 +720,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/question8"
                 style="@style/question_layout">
 
                 <TextView

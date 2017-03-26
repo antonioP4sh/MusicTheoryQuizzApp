@@ -12,8 +12,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.example.android.musictheoryquizzapp.R.layout.start_layout;
-
 public class MainActivity extends AppCompatActivity {
 
     String playerName = "";
@@ -34,15 +32,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        if (savedInstanceState != null) {
-            if (savedInstanceState.getString("LAYOUT_KEY").contentEquals("activity_main")) {
-                setContentView(R.layout.activity_main);
-            } else {
-                setContentView(start_layout);
-            }
+        if (savedInstanceState == null) {
+            TextView playerNameMain = (TextView) findViewById(R.id.player_name);
+            playerName = getIntent().getStringExtra("PLAYER_NAME");
+            playerNameMain.setText(playerName);
         } else {
-            setContentView(start_layout);
+            return;
         }
     }
 
@@ -50,84 +47,57 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString("LAYOUT_KEY", mLayout);
         outState.putString("PLAYER_NAME_KEY", playerName);
-
-        if (mLayout.contentEquals("activity_main")) {
-
-            outState.putStringArray("USED_HELPS_ARRAY_KEY", usedHelps);
-            outState.putStringArray("HELPS_ICON_ARRAY_KEY", usedHelpsIcon);
-            outState.putInt("HELP_COUNT", helpCount);
-            outState.putBooleanArray("USED_HINTS_ARRAY_KEY", isTipOn);
-            outState.putBooleanArray("USED_FIFTY_ARRAY_KEY", isFiftyOn);
-        }
+        outState.putStringArray("USED_HELPS_ARRAY_KEY", usedHelps);
+        outState.putStringArray("HELPS_ICON_ARRAY_KEY", usedHelpsIcon);
+        outState.putInt("HELP_COUNT", helpCount);
+        outState.putBooleanArray("USED_HINTS_ARRAY_KEY", isTipOn);
+        outState.putBooleanArray("USED_FIFTY_ARRAY_KEY", isFiftyOn);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        if (savedInstanceState.getString("LAYOUT_KEY").contentEquals("activity_main")) {
+        TextView mPlayerName = (TextView) findViewById(R.id.player_name);
+        playerName = savedInstanceState.getString("PLAYER_NAME_KEY");
+        mPlayerName.setText(String.valueOf(savedInstanceState.getString("PLAYER_NAME_KEY")));
+        helpCount = savedInstanceState.getInt("HELP_COUNT");
+        mLayout = savedInstanceState.getString("LAYOUT_KEY");
+        usedHelps = savedInstanceState.getStringArray("USED_HELPS_ARRAY_KEY");
+        usedHelpsIcon = savedInstanceState.getStringArray("HELPS_ICON_ARRAY_KEY");
+        isTipOn = savedInstanceState.getBooleanArray("USED_HINTS_ARRAY_KEY");
+        isFiftyOn = savedInstanceState.getBooleanArray("USED_FIFTY_ARRAY_KEY");
 
-            TextView mPlayerName = (TextView) findViewById(R.id.player_name);
-            playerName = savedInstanceState.getString("PLAYER_NAME_KEY");
-            mPlayerName.setText(String.valueOf(savedInstanceState.getString("PLAYER_NAME_KEY")));
-            helpCount = savedInstanceState.getInt("HELP_COUNT");
-            mLayout = savedInstanceState.getString("LAYOUT_KEY");
-            usedHelps = savedInstanceState.getStringArray("USED_HELPS_ARRAY_KEY");
-            usedHelpsIcon = savedInstanceState.getStringArray("HELPS_ICON_ARRAY_KEY");
-            isTipOn = savedInstanceState.getBooleanArray("USED_HINTS_ARRAY_KEY");
-            isFiftyOn = savedInstanceState.getBooleanArray("USED_FIFTY_ARRAY_KEY");
-
-            if (usedHelps[0] != null) {
-                for (int i = 0; i < (helpCount); i++) {
-                    int helpResId = getResources().getIdentifier(usedHelps[i], "id", getPackageName());
-                    int srcResId = getResources().getIdentifier(usedHelpsIcon[i], "id", getPackageName());
-                    ImageView helpIcon = (ImageView) findViewById(helpResId);
-                    helpIcon.setImageResource(srcResId);
-                }
-                for (int i = 0; i < helpCount; i++) {
-                    int helpCountResId = getResources().getIdentifier("help" + (i + 1), "id", getPackageName());
-                    ImageView helpCountIcon = (ImageView) findViewById(helpCountResId);
-                    helpCountIcon.setImageResource(R.drawable.icon_help_wh);
-                }
+        if (usedHelps[0] != null) {
+            for (int i = 0; i < (helpCount); i++) {
+                int helpResId = getResources().getIdentifier(usedHelps[i], "id", getPackageName());
+                int srcResId = getResources().getIdentifier(usedHelpsIcon[i], "id", getPackageName());
+                ImageView helpIcon = (ImageView) findViewById(helpResId);
+                helpIcon.setImageResource(srcResId);
             }
-            for (int i = 0; i < (8); i++) {
-                if (isTipOn[i] == true) {
-                    displayHint(i + 1);
-                }
+            for (int i = 0; i < helpCount; i++) {
+                int helpCountResId = getResources().getIdentifier("help" + (i + 1), "id", getPackageName());
+                ImageView helpCountIcon = (ImageView) findViewById(helpCountResId);
+                helpCountIcon.setImageResource(R.drawable.icon_help_wh);
             }
-
-            isFiftyOn[4] = false;
-            for (int j = 0; j < (6); j++) {
-                if (isFiftyOn[j] == true) {
-                    // int fiftyQuestion = fiftyAbleQuestions[j];
-                    displayFifty(j + 1);
-                }
-            }
-            if (helpCount == 3) {
-                fullHelpWipe();
-            }
-
         }
-    }
-
-    public void startGame(View v) {
-
-        EditText playerNameField = (EditText) findViewById(R.id.player_name_field);
-        playerName = playerNameField.getText().toString();
-
-        if (playerNameField != null) {
-            playerName = playerNameField.getText().toString();
-        }
-        if (playerName == null || playerName.length() == 0) {
-            playerName = "";
+        for (int i = 0; i < (8); i++) {
+            if (isTipOn[i] == true) {
+                displayHint(i + 1);
+            }
         }
 
-        mLayout = "activity_main";
-        setContentView(R.layout.activity_main);
-        TextView playerNameMain = (TextView) findViewById(R.id.player_name);
-        playerNameMain.setText(playerName);
+        isFiftyOn[4] = false;
+        for (int j = 0; j < (6); j++) {
+            if (isFiftyOn[j] == true) {
+                // int fiftyQuestion = fiftyAbleQuestions[j];
+                displayFifty(j + 1);
+            }
+        }
+        if (helpCount == 3) {
+            fullHelpWipe();
+        }
     }
 
     public void buttonLogic3A(View v) {
@@ -257,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void calculateScore(View v) {
         int score = 0;
+        boolean question8Check = false;
         int answer1Point = R.id.radio_1B;
         int answer2Point = R.id.radio_2C;
         int answer3Point = R.id.radio_3B;
@@ -290,47 +261,107 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < (answer8Point.length); i++) {
             if (answer8.equalsIgnoreCase(answer8Point[i])) {
                 score += 2;
+                question8Check = true;
+                View question8 = findViewById(R.id.question8);
+                question8.setBackgroundResource(R.drawable.question_bg_correct);
             }
         }
+        if (!question8Check) {
+            View question8 = findViewById(R.id.question8);
+            question8.setBackgroundResource(R.drawable.question_bg_wrong);
+        }
 
-        if (answer1 == true) {
+        if (answer1) {
             score += 2;
+            View question1 = findViewById(R.id.question1);
+            question1.setBackgroundResource(R.drawable.question_bg_correct);
+        } else {
+            View question1 = findViewById(R.id.question1);
+            question1.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer2 == true) {
+        if (answer2) {
             score += 2;
+            View question2 = findViewById(R.id.question2);
+            question2.setBackgroundResource(R.drawable.question_bg_correct);
+        } else {
+            View question2 = findViewById(R.id.question2);
+            question2.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer3 == true) {
+        if (answer3) {
             score += 2;
+            View question3 = findViewById(R.id.question3);
+            question3.setBackgroundResource(R.drawable.question_bg_correct);
+        } else {
+            View question3 = findViewById(R.id.question3);
+            question3.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer4 == true) {
+        if (answer4) {
             score += 2;
+            View question4 = findViewById(R.id.question4);
+            question4.setBackgroundResource(R.drawable.question_bg_correct);
+        } else {
+            View question4 = findViewById(R.id.question4);
+            question4.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer5a == true) {
+        if (answer5a) {
             score += 1;
+        } else {
+            View question5 = findViewById(R.id.question5);
+            question5.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer5b == true) {
+        if (answer5b) {
             score += 1;
+        } else {
+            View question5 = findViewById(R.id.question5);
+            question5.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer5x == true) {
+        if (answer5a && answer5b && !answer5x && !answer5y) {
+            View question5 = findViewById(R.id.question5);
+            question5.setBackgroundResource(R.drawable.question_bg_correct);
+        }
+        if (answer5x) {
             score -= 1;
+            View question5 = findViewById(R.id.question5);
+            question5.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer5y == true) {
+        if (answer5y) {
             score -= 1;
+            View question5 = findViewById(R.id.question5);
+            question5.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer6 == true) {
+        if (answer6) {
             score += 2;
+            View question6 = findViewById(R.id.question6);
+            question6.setBackgroundResource(R.drawable.question_bg_correct);
+        } else {
+            View question6 = findViewById(R.id.question6);
+            question6.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer7a == true) {
+        if (answer7a) {
             score += 1;
+        } else {
+            View question7 = findViewById(R.id.question7);
+            question7.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer7b == true) {
+        if (answer7b) {
             score += 1;
+        } else {
+            View question7 = findViewById(R.id.question7);
+            question7.setBackgroundResource(R.drawable.question_bg_wrong);
         }
-        if (answer7x == true) {
-            score -= 1;
+        if (answer7a && answer7b && !answer7x && !answer7y) {
+            View question7 = findViewById(R.id.question7);
+            question7.setBackgroundResource(R.drawable.question_bg_correct);
         }
-        if (answer7y == true) {
+        if (answer7x) {
             score -= 1;
+            View question7 = findViewById(R.id.question7);
+            question7.setBackgroundResource(R.drawable.question_bg_wrong);
+        }
+        if (answer7y) {
+            score -= 1;
+            View question7 = findViewById(R.id.question7);
+            question7.setBackgroundResource(R.drawable.question_bg_wrong);
         }
 
         score -= helpCount;
